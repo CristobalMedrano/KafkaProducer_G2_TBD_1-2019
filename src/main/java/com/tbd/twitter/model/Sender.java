@@ -14,10 +14,10 @@ public class Sender {
     private String jsonTopic;
 
     @Autowired
-    private KafkaTemplate<String, Tweet> kafkaTemplate;
+    private KafkaTemplate<String, Tweet> kafkaJsonTemplate;
 
     public void send(Tweet tweet) {
         LOGGER.info("sending tweet='{}'", tweet.toString());
-        kafkaTemplate.send(jsonTopic, tweet);
+        kafkaJsonTemplate.send(jsonTopic, tweet);
     }
 }
