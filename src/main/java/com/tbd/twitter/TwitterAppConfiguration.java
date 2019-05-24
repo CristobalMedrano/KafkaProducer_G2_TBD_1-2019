@@ -1,7 +1,6 @@
 package com.tbd.twitter;
 
 import com.tbd.twitter.model.Tweet;
-import com.tbd.twitter.model.Sender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

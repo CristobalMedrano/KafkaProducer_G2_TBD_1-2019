@@ -2,11 +2,11 @@ package com.tbd.twitter;
 
 import javax.annotation.PostConstruct;
 
-import com.tbd.twitter.model.Sender;
 import com.tbd.twitter.model.Tweet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
@@ -32,7 +32,10 @@ public class TwitterListener {
 	private TwitterStream twitterStream;
 
 	@Autowired
-	private Sender sender;
+	private KafkaTemplate<String, Tweet> kafkaJsonTemplate;
+
+	@Value("${kafka.topicName}")
+	private String jsonTopic;
 
 	@PostConstruct
 	public void run() {
@@ -50,7 +53,8 @@ public class TwitterListener {
 							status.getGeoLocation(),
 							status.getUser().getLocation(),
 							status.getRetweetCount());
-					sender.send(tweet);
+					System.out.println(tweet);
+					kafkaJsonTemplate.send(jsonTopic, tweet);
 				}
 			}
 
