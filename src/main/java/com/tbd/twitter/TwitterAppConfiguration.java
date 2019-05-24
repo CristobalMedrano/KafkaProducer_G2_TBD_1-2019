@@ -70,8 +70,4 @@ public class TwitterAppConfiguration {
         return new KafkaTemplate<>(producerFactory());
     }
 
-    @Bean
-    public Sender sender() {
-        return new Sender();
-    }
 }
