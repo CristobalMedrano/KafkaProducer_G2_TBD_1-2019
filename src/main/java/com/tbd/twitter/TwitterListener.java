@@ -32,7 +32,7 @@ public class TwitterListener {
 	private TwitterStream twitterStream;
 
 	@Autowired
-	private KafkaTemplate<String, String> kafkaTemplate;
+	private KafkaTemplate<String, Tweet> kafkaTemplate;
 
 	@Value("${kafka.topicName}")
 	private String jsonTopic;
@@ -54,7 +54,7 @@ public class TwitterListener {
 							status.getUser().getLocation(),
 							status.getRetweetCount());
 					System.out.println(tweet);
-					kafkaTemplate.send(jsonTopic, tweet.toString());
+					kafkaTemplate.send(jsonTopic, tweet);
 				}
 			}
 
