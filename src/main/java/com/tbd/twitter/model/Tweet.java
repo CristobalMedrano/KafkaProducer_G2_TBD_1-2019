@@ -1,5 +1,7 @@
 package com.tbd.twitter.model;
 
+import java.util.Date;
+
 public class Tweet {
 
     private Long id;
@@ -10,12 +12,13 @@ public class Tweet {
     private twitter4j.GeoLocation geoLocation;
     private String userLocation;
     private Integer retweet;
+    private Date publicationDate;
 
     public Tweet() {
         super();
     }
 
-    public Tweet(Long id, String name, String text, Integer like, Integer followers, twitter4j.GeoLocation geoLocation, String userLocation, Integer retweet) {
+    public Tweet(Long id, String name, String text, Integer like, Integer followers, twitter4j.GeoLocation geoLocation, String userLocation, Integer retweet, Date publicationDate) {
         super();
         this.setId(id);
         this.setName(name);
@@ -25,6 +28,7 @@ public class Tweet {
         this.setGeoLocation(geoLocation);
         this.setUserLocation(userLocation);
         this.setRetweet(retweet);
+        this.setPublicationDate(publicationDate);
     }
 
     public Long getId() {
@@ -93,6 +97,14 @@ public class Tweet {
 
     @Override
     public String toString() {
-        return "{id="+ getId() +", name="+ getName() +", text="+ getText() +", like="+ getLike() +", followers="+ getFollowers() +", geoLocation="+ getGeoLocation() +", userLocation="+ getUserLocation() +", retweet="+ getRetweet() +"}";
+        return "{id="+ getId() +", name="+ getName() +", text="+ getText() +", like="+ getLike() +", followers="+ getFollowers() +", geoLocation="+ getGeoLocation() +", userLocation="+ getUserLocation() +", retweet="+ getRetweet() +", publicationDate="+ getPublicationDate()+"}";
+    }
+
+    public Date getPublicationDate() {
+        return publicationDate;
+    }
+
+    public void setPublicationDate(Date publicationDate) {
+        this.publicationDate = publicationDate;
     }
 }
