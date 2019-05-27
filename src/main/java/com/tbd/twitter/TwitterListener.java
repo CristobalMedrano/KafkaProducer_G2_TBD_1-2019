@@ -53,7 +53,7 @@ public class TwitterListener {
 							status.getGeoLocation(),
 							status.getUser().getLocation(),
 							status.getRetweetCount(),
-							status........);
+							status.getCreatedAt());
 					System.out.println(tweet);
 					kafkaTemplate.send(jsonTopic, tweet);
 				}
