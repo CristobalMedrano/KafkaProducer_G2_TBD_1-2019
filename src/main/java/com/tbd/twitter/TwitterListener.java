@@ -2,6 +2,7 @@ package com.tbd.twitter;
 
 import javax.annotation.PostConstruct;
 
+import com.tbd.twitter.Analisis.Classifier;
 import com.tbd.twitter.model.Tweet;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import twitter4j.TwitterStream;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.Resource;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.List;
 @Configurable
 public class TwitterListener {
 
+	@Autowired
+	private Classifier classifier;
 	@Autowired
 	private ResourceLoader resourceLoader;
 
@@ -36,16 +40,20 @@ public class TwitterListener {
 
 	@Value("${kafka.topicName}")
 	private String jsonTopic;
-
+	private HashMap<String, Double> stadistics = new HashMap<String, Double>();
+	private Long positive;
+	private Long negative;
 	@PostConstruct
 	public void run() {
 		twitterStream.addListener(new StatusListener() {
 			public void onStatus(Status status) {
 				String userLocation = status.getUser().getLocation();
-				if (userLocation.indexOf("Chile")>0){
-
+				if (2>0){
+					stadistics = classifier.classify(status.getText());
 					Tweet tweet = new Tweet(
 							status.getId(),
+							stadistics.get("positive"),
+							stadistics.get("negative"),
 							status.getUser().getName(),
 							status.getText(),
 							status.getFavoriteCount(),
@@ -105,5 +113,17 @@ public class TwitterListener {
 
 	public void setTwitterStream(TwitterStream twitterStream) {
 		this.twitterStream = twitterStream;
+	}
+
+	public HashMap<String,Double> classify(String text) {
+		return this.classifier.classify(text);
+	}
+
+	public Classifier getClassifier() {
+		return classifier;
+	}
+
+	public void setClassifier(Classifier classifier) {
+		this.classifier = classifier;
 	}
 }

@@ -47,7 +47,11 @@
       <artifactId>jackson-databind</artifactId>
       <version>2.9.9</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.apache.opennlp</groupId>
+      <artifactId>opennlp-tools</artifactId>
+      <version>1.9.1</version>
+    </dependency>
   </dependencies>
 
   <build>
