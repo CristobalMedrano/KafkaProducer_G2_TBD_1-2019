@@ -48,7 +48,7 @@ public class TwitterListener {
 		twitterStream.addListener(new StatusListener() {
 			public void onStatus(Status status) {
 				String userLocation = status.getUser().getLocation();
-				if (2>0){
+				if (userLocation.indexOf("Chile")>0){
 					stadistics = classifier.classify(status.getText());
 					Tweet tweet = new Tweet(
 							status.getId(),
